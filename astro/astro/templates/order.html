@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %} Планета: {{ planet.id }} {% endblock %}
+
+{% block content %}
+    <div class="detCard space spaceFlex">
+        <img class="detImg" src="{{planet.detImg}}" alt="планета">
+        <div class="detContent">
+            <p class="detName">{{planet.name}}</p>
+            <p class="detDes">{{planet.detDes}}</p>
+        </div>
+    </div>
+{% endblock %}

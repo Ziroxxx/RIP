@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %} Список Желаемого {% endblock %}
+
+{% block content %}
+    <div class="titleText space centerFlex">Список желаемого</div>
+    <div class="container">
+        {% for planet in wish %}
+            {% include 'card.html' %}
+            {% empty %}
+                <li>Список пуст!</li>
+        {% endfor %}
+    </div>
+    {% if wish|length > 0 %}
+        <div class="space centerFlex">
+            <a class="btn btnAccept card-button" href="">Сохранить</a>
+            <a class="btn btnDelay card-button" href="">Очистить</a>
+        </div>
+    {% endif %}
+{% endblock %}

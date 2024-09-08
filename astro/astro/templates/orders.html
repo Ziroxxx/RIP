@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %} Выбор планет {% endblock %}
+
+{% block content %}
+    <form action="search" class="sForm space centerFlex" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input class="text" name="text" type="text" placeholder="Поиск планеты" value="{{ data.searchText }}">
+        <input class="submit" type="submit" value="Найти" >
+    </form>
+    <div class="container">  
+        {% for planet in planets %}
+            {% include 'card.html' %}
+            {% empty %}
+            <li>Список пуст!</li>
+        {% endfor %}
+         <a href="{% url 'wish' data.curOrderId %}" class="btnWish btnCommon">
+            <img class="wishImg" src="http://localhost:9000/images/wishLogo.png" alt="">
+         </a>
+         {% if wishCount > 0 %}
+            <div class="wishCount">{{ wishCount }}</div>
+         {% endif %}
+    </div>
+{% endblock %}

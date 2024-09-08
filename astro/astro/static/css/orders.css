@@ -1,0 +1,240 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=PT+Sans+Narrow:wght@400;700&display=swap');
+
+
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Oswald', 'PT Sans Narrow';
+    color: #000000; 
+}
+
+.space{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.header{
+    height: 66px;
+    background-color: #242424;
+    opacity: 90%;
+    display: flex;
+    align-items: center;
+}
+
+.logo{
+    text-decoration: none;
+}
+
+.logoImg{
+    margin-left: 50px;
+    height: 66px;
+    object-fit: cover;
+}
+
+.logoName{
+    font: "PT Sans Narrow";
+    font-size: 48px;
+    color: #FFFFFF;
+}
+
+.sForm{
+    width: 90%;
+    margin-top: 18px;
+    margin-bottom: 18px;
+    justify-content: center;
+    font-family: "PT Sans Narrow", sans-serif;
+    font-weight: 200;
+}
+
+.text{
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    background-color: #D9D9D9;
+    border: none;
+    width: 400px;
+    height: 42px;
+    padding-left: 1%;
+}
+
+.submit{
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    width: 100px;
+    height: 42px;
+    color: #FFFFFF;
+    background-color: #c14623;
+    border: none;
+}
+
+.container{
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    gap: 41px;
+    
+}
+
+.card{
+    background-color: #FFFFFF;
+    border: 1px solid #000000;
+    padding: 20px 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card:hover{
+    border: 1px, solid #c14623;
+}
+
+.image{
+    width: 222px;
+    height: 250px;
+    border-radius: 20px;
+    object-fit: cover;
+}
+
+.title{
+    margin-top: 10px;
+    font-size: 23px;
+}
+
+.short-description{
+    margin-top: 10px;
+    font-size: 16px;
+    font-family: "PT Sans Narrow", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    width: 100%;
+}
+
+.card-buttons{
+    margin-top: auto;
+}
+
+.card-button{
+    margin-top: 10px;
+    margin-right: 20px;
+    width: 98px;
+    height: 40px;
+}
+
+.btnWish{
+    position: fixed;
+    bottom: 1%;
+    right: 1%;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    display: flex;
+}
+
+.wishImg{
+    object-fit: cover;
+}
+
+.wishCount{
+    position: fixed;
+    right: 1%;
+    bottom: 6%;
+    display: flex;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: red;
+    color: #FFFFFF;
+}
+
+.titleText{
+    width: 90%;
+    margin-top: 18px;
+    margin-bottom: 18px;
+    font-size: 36px;
+}
+
+.detCard{
+    margin-top: 30px;
+    width: 90%;
+}
+
+.detImg{
+    width: 367px;
+    height: 360px;
+    border-radius: 20px;
+    object-fit: cover;
+}
+
+.detName{
+    margin-left: 25px;
+    font: "Oswald";
+    font-size: 64px;
+}
+
+.detDes{
+    margin-left: 25px;
+    font-family: "PT Sans Narrow", sans-serif;
+    font-style: normal;
+    font-size: 16px;
+}
+
+.btn{
+    width: 100px;
+    height: 34px;
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: 100;
+    border: 1px solid white;
+    border-radius: 20px;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+}
+
+.btnCommon{
+    background-color: #c14623;
+}
+
+.btnCommon:hover{
+    color: #c14623;
+    background-color: white;
+    border: 1px solid #c14623;
+    transition: 200ms;
+}
+
+.btnAccept{
+    background-color: #3bb311;
+}
+
+.btnAccept:hover{
+    color: #3bb311;
+    background-color: #FFFFFF;
+    border: 1px solid #3bb311;
+}
+
+.btnDelay{
+    background-color: #c70f0f;
+}
+
+.btnDelay:hover{
+    color: #c70f0f;
+    background-color: #FFFFFF;
+    border: 1px solid #c70f0f;
+}
+
+.centerFlex{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.spaceFlex{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

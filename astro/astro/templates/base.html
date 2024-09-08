@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en" class="h-100">
+<head>
+  <meta charset="utf-8">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/orders.css' %}">
+    <div class="space">
+        <div class="header">
+          <a href="{% url 'home' %}" class="logo centerFlex">
+            <img src="http://localhost:9000/images/logo2.png" alt="лого" class="logoImg">
+            <h6 class="logoName">AstroGid</h6>
+          </a>
+        </div>
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

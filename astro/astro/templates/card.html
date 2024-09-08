@@ -1,0 +1,9 @@
+<div class="card">    
+    <img src="{{planet.img}}" class="image">
+    <p class="title">{{planet.name}}</p>
+    <p class="short-description">{{planet.description}}</p>
+    <div class="card-buttons spaceFlex">
+        <a href="" class="card-button centerFlex btn btnCommon">{{ action }}</a>
+        <a href="{% url 'PlanetID' planet.id %}" class="card-button centerFlex btn btnCommon">Подробнее</a> 
+    </div>
+</div>
