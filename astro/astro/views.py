@@ -62,7 +62,7 @@ data = {'planets': [
         'orders': [{'id': 1, 'planets': [1, 4, 3]}, 
                    {'id': 2, 'planets': []}, 
                    {'id': 3, 'planets': [1, 7, 6, 2]}],
-        'curOrderId': '1',
+        'curOrderId': '3',
         'searchText': '',
         'searchResult': [],}
 
@@ -97,14 +97,4 @@ def getPlanet(request, planet_id):
 
 def getWishList(request, wish_id):
     return render(request, 'wish_list.html', {'wish': idToPlanets(findWishList(wish_id)), 'action': 'Удалить'})
-
-def search(request):
-    data['searchResult'].clear()
-    text = request.POST['text']
-    data['searchText'] = text
-    data['isSearch'] = True
-    for planet in data['planets']:
-        if text.lower() in planet['name'].lower():
-            data['searchResult'].append(planet)
-    return redirect('home')
 
