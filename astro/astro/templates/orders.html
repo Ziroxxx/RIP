@@ -3,8 +3,7 @@
 {% block title %} Выбор планет {% endblock %}
 
 {% block content %}
-    <form action="search" class="sForm space centerFlex" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
+    <form action="{% url 'home' %}" class="sForm space centerFlex" method="get">
         <input class="text" name="text" type="text" placeholder="Поиск планеты" value="{{ data.searchText }}">
         <input class="submit" type="submit" value="Найти" >
     </form>

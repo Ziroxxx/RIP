@@ -64,8 +64,7 @@ data = {'planets': [
                    {'id': 3, 'planets': [1, 7, 6, 2]}],
         'curOrderId': '1',
         'searchText': '',
-        'searchResult': [],
-        'isSearch': False}
+        'searchResult': [],}
 
 def idToPlanets(idList):
     result = []
@@ -81,10 +80,16 @@ def findWishList(id_of_wish):
             resultId = order['planets']
     return resultId
 
-def getOrders(request):
+def getServices(request):
+    data['searchText'] = request.GET.get('text', '')
+    data['searchResult'].clear()
+    for planet in data['planets']:
+        if data['searchText'].lower() in planet['name'].lower():
+            data['searchResult'].append(planet)
+    
     list = findWishList(int(data['curOrderId']))
-    if data['isSearch'] == False:
-        return render(request, 'orders.html', {'data': data, 'wishCount': len(list), 'planets': data['planets'], 'action': 'Добавить'})
+    if data['searchText'] == '':
+        return render(request, 'orders.html', {'data': data, 'planets': data['planets'], 'wishCount': len(list), 'action': 'Добавить'})
     return render(request, 'orders.html', {'data': data, 'planets': data['searchResult'], 'wishCount': len(list), 'action': 'Добавить'})
 
 def getPlanet(request, planet_id):

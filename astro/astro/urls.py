@@ -21,8 +21,7 @@ from django.urls import path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.getOrders, name = 'home'),
+    path('', views.getServices, name = 'home'),
     path('planet/<int:planet_id>/', views.getPlanet, name = 'PlanetID'),
-    path('search', views.search, name='search'),
     path('wish/<int:wish_id>', views.getWishList, name = 'wish'),
 ]
