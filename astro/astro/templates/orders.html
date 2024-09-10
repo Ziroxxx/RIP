@@ -4,7 +4,7 @@
 
 {% block content %}
     <form action="{% url 'home' %}" class="sForm space centerFlex" method="get">
-        <input class="text" name="text" type="text" placeholder="Поиск планеты" value="{{ data.searchText }}">
+        <input class="text" name="PlanetName" type="text" placeholder="Поиск планеты" value="{{ data.searchText }}">
         <input class="submit" type="submit" value="Найти" >
     </form>
     <div class="container">  
