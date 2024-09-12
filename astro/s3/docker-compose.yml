@@ -1,6 +1,6 @@
 # устанавливаем версию в соотвествии с необходимой нам
 # подробнее на https://docs.docker.com/compose/compose-file/compose-versioning/
-version: '3.7'
+
 
 # настройки и конфигурации, общие для всех контейнеров
 x-minio-common: &minio-common

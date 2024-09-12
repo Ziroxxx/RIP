@@ -3,9 +3,9 @@
 {% block title %} Выбор планет {% endblock %}
 
 {% block content %}
-    <form action="search" class="sForm space centerFlex" method="post" enctype="multipart/form-data">
+    <form action="" class="sForm space centerFlex" method="get">
         {% csrf_token %}
-        <input class="text" name="text" type="text" placeholder="Поиск планеты" value="{{ data.searchText }}">
+        <input class="text" name="PlanetName" type="text" placeholder="Поиск планеты" value="{{ searchText }}">
         <input class="submit" type="submit" value="Найти" >
     </form>
     <div class="container">  
@@ -14,11 +14,15 @@
             {% empty %}
             <li>Список пуст!</li>
         {% endfor %}
-         <a href="{% url 'wish' data.curOrderId %}" class="btnWish btnCommon">
-            <img class="wishImg" src="http://localhost:9000/images/wishLogo.png" alt="">
-         </a>
-         {% if wishCount > 0 %}
+        {% if wishCount > 0 %}
+            <a href="{% url 'wish' wish_id %}" class="btnWish btnCommon">
+                <img class="wishImg" src="http://localhost:9000/images/wishLogo.png" alt="">
+            </a>
             <div class="wishCount">{{ wishCount }}</div>
-         {% endif %}
+        {% else %}
+            <a href="" class="btnWish btnCommon">
+                <img class="wishImg" src="http://localhost:9000/images/wishLogo.png" alt="">
+            </a>
+        {% endif %}
     </div>
 {% endblock %}

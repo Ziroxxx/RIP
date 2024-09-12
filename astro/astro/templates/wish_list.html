@@ -14,7 +14,11 @@
     {% if wish|length > 0 %}
         <div class="space centerFlex">
             <a class="btn btnAccept card-button" href="">Сохранить</a>
-            <a class="btn btnDelay card-button" href="">Очистить</a>
+            <form action="{% url 'delWish' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="delWish" value="{{ wishID }}">
+                <button class="btn btnDelay card-button" type="submit">Очистить</button>
+            </form>
         </div>
     {% endif %}
 {% endblock %}

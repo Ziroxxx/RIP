@@ -3,7 +3,15 @@
     <p class="title">{{planet.name}}</p>
     <p class="short-description">{{planet.description}}</p>
     <div class="card-buttons spaceFlex">
-        <a href="" class="card-button centerFlex btn btnCommon">{{ action }}</a>
-        <a href="{% url 'PlanetID' planet.id %}" class="card-button centerFlex btn btnCommon">Подробнее</a> 
+        {% if action == 'Добавить' %}
+            <form action="{% url 'addPlanet' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="addingPlanet" value="{{planet.planetID}}">
+                <button type="submit" class="card-button centerFlex btn btnCommon">{{ action }}</button>
+            </form>
+        {% else %}
+            <a href="" class="card-button centerFlex btn btnCommon">{{ action }}</a>
+        {% endif %}
+        <a href="{% url 'PlanetID' planet.planetID %}" class="card-button centerFlex btn btnCommon">Подробнее</a> 
     </div>
 </div>
