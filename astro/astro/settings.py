@@ -54,7 +54,7 @@ ROOT_URLCONF = 'astro.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR, 'astro/astro/templates'],
+        'DIRS': [BASE_DIR, 'astro/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
