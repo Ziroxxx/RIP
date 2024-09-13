@@ -200,6 +200,10 @@
     background-color: #c14623;
 }
 
+.btnWishNotActive{
+    background-color: #c14623;
+}
+
 .btnCommon:hover{
     color: #c14623;
     background-color: white;

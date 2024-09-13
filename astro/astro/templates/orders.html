@@ -4,7 +4,6 @@
 
 {% block content %}
     <form action="" class="sForm space centerFlex" method="get">
-        {% csrf_token %}
         <input class="text" name="PlanetName" type="text" placeholder="Поиск планеты" value="{{ searchText }}">
         <input class="submit" type="submit" value="Найти" >
     </form>
@@ -20,9 +19,9 @@
             </a>
             <div class="wishCount">{{ wishCount }}</div>
         {% else %}
-            <a href="" class="btnWish btnCommon">
+            <div class="btnWishNotActive btnWish">
                 <img class="wishImg" src="http://localhost:9000/images/wishLogo.png" alt="">
-            </a>
+            </div>
         {% endif %}
     </div>
 {% endblock %}
