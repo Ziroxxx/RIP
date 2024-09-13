@@ -15,6 +15,7 @@
 }
 
 .header{
+    width: 100%;
     height: 66px;
     background-color: #242424;
     opacity: 90%;
@@ -241,4 +242,45 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.dateInput{
+    padding: 16px 10px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    margin-left: 80px;
+    display: flex;
+    align-items: center;
+}
+
+.textDate{
+    font-family: "PT Sans Narrow", sans-serif;
+    font-size: 36px;
+    margin-right: 20px;
+    margin-left: 0px;
+}
+
+.dateType{
+    font-family: "PT Sans Narrow", sans-serif;
+    font-size: 24px;
+    background-color: #c14623;
+    color: #FFFFFF;
+    border-bottom-left-radius: 20px;
+    border-top-left-radius: 20px;
+    width: 112px;
+    height: 52px;
+}
+
+select{
+    border: 3px solid #c14623;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    font-family: "PT Sans Narrow";
+    font-size: 16px;
+    font: small;
+    height: 52px;
+    width: 100px;
+    text-align: center;
+    text-align-last: center;
+    margin-right: 20px;
 }

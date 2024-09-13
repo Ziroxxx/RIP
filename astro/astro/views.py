@@ -1,4 +1,4 @@
-from .models import planets, requests, mm, get_user_model
+from .models import planets, requests, mm
 from django.shortcuts import render, redirect
 from django.db import connection, transaction
 
