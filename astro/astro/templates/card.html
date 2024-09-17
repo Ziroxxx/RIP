@@ -6,7 +6,8 @@
         {% if action == 'Добавить' %}
             <form action="{% url 'addPlanet' %}" method="post">
                 {% csrf_token %}
-                <input type="hidden" name="addingPlanet" value="{{planet.planetID}}">
+                <input type="hidden" name="addingPlanet" value="{{ planet.planetID }}">
+                <input type="hidden" name="searchArg" value="{{ searchText }}">
                 <button type="submit" class="card-button centerFlex btn btnCommon">{{ action }}</button>
             </form>
         {% else %}

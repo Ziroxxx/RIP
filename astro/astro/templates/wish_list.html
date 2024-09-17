@@ -17,7 +17,6 @@
     </div>
     {% if wish|length > 0 %}
         <div class="space centerFlex">
-            <a class="btn btnAccept card-button" href="">Сохранить</a>
             <form action="{% url 'delWish' %}" method="post">
                 {% csrf_token %}
                 <input type="hidden" name="delWish" value="{{ wishID }}">
