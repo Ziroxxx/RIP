@@ -245,19 +245,24 @@
 }
 
 .dateInput{
-    padding: 16px 10px;
-    margin-top: 30px;
-    margin-bottom: 30px;
-    margin-left: 80px;
-    display: flex;
-    align-items: center;
+    width: auto;
+    height: 313px;
+    padding: 25px 238px;
+    margin-bottom: 10px;
+    background-color: #0f1040;
+}
+
+.data-container{
+    margin-bottom: 25px;
 }
 
 .textDate{
     font-family: "PT Sans Narrow", sans-serif;
-    font-size: 36px;
-    margin-right: 20px;
-    margin-left: 0px;
+    font-size: 24px;
+    font-weight: 400;
+    font-style: normal;
+    margin-left: 23%;
+    color: #FFFFFF;
 }
 
 .dateType{
@@ -283,4 +288,13 @@ select{
     text-align: center;
     text-align-last: center;
     margin-right: 20px;
+}
+
+.consInput{
+    border: 2px solid #c14623;
+    border-radius: 20px;
+    height: 43px;
+    width: 500px;
+    background-color: #FFFFFF;
+    padding-left: 2%;
 }
