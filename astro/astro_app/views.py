@@ -7,7 +7,7 @@ def getServices(request):
     searchText = request.GET.get('PlanetName', '')
     searchResult = planet.objects.filter(name__icontains=searchText)
     draft_req = request.user.user_reqs.filter(isDraft=True).first()
-    print(searchResult, draft_req)
+    print(draft_req)
     if draft_req:
         wishCount = mm.objects.filter(reqID = draft_req).count()
         wishID = draft_req.reqID
@@ -49,7 +49,7 @@ def addPlanet(request):
 def removeDraft(request):
     id = request.POST['delWish']
     c = connection.cursor()
-    c.execute('update astro_cons_period set "isDraft" = false, "isDeleted" = true where "reqID" = %s', [id])
+    c.execute('update astro_app_cons_period set "isDraft" = false, "isDeleted" = true where "reqID" = %s', [id])
     transaction.commit()
     c.close()
     return redirect('home')
