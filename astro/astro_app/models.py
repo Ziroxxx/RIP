@@ -1,12 +1,30 @@
 from django.db import models
-from django.contrib.auth import get_user_model
+
+class AuthUser(models.Model):
+    password = models.CharField(max_length=128)
+    last_login = models.DateTimeField(blank=True, null=True)
+    is_superuser = models.BooleanField()
+    username = models.CharField(unique=True, max_length=150)
+    first_name = models.CharField(max_length=150)
+    last_name = models.CharField(max_length=150)
+    email = models.CharField(max_length=254)
+    is_staff = models.BooleanField()
+    is_active = models.BooleanField(default=True)
+    date_joined = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.username}'
+
+    class Meta:
+        managed = False
+        db_table = 'auth_user'
 
 class planet(models.Model):
     planetID = models.AutoField(primary_key=True)
     name = models.CharField(max_length=20)
     description = models.CharField(max_length=300)
-    img = models.CharField(max_length=50)
-    detImg = models.CharField(max_length=50)
+    img = models.CharField(max_length=50, null=True)
+    detImg = models.CharField(max_length=50, null=True)
     detDes = models.TextField()
 
 class cons_period(models.Model):
@@ -23,8 +41,8 @@ class cons_period(models.Model):
     dateEnd = models.DateField(null=True)
     constellation = models.TextField(max_length=50, null=True)
 
-    userID = models.ForeignKey(get_user_model(), on_delete=models.DO_NOTHING, null=True, related_name='user_reqs')
-    moderID = models.ForeignKey(get_user_model(), on_delete=models.DO_NOTHING, null=True, related_name='moderated_reqs')
+    userID = models.ForeignKey(AuthUser, on_delete=models.DO_NOTHING, null=True, related_name='user_reqs')
+    moderID = models.ForeignKey(AuthUser, on_delete=models.DO_NOTHING, null=True, related_name='moderated_reqs')
 
 class mm(models.Model):
     planetID = models.ForeignKey(planet, on_delete=models.DO_NOTHING)

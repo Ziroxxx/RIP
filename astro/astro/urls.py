@@ -26,4 +26,19 @@ urlpatterns = [
     path('wish/<int:wish_id>', views.getWishList, name = 'wish'),
     path('add', views.addPlanet, name = 'addPlanet'),
     path('delWish', views.removeDraft, name = 'delWish'),
+
+    path('api/planets/', views.planetMethods.as_view(), name='getPlanets'),
+    path('api/planet/<int:pk>', views.one_planet.as_view(), name='getPlanet'),
+    path('api/planet/<int:pk>/post', views.add_image, name='setImg'),
+
+    path('api/requests', views.requests.as_view(), name='getRequests'),
+    path('api/request/<int:pk>', views.one_request.as_view(), name='getRequest'),
+    path('api/request/<int:pk>/save-by-creator', views.save_by_creator, name='saveByCreator'),
+    path('api/request/<int:pk>/moderate', views.moderate, name='moderateRequest'),
+
+    path('api/mm/<int:pk_req>/<int:pk_planet>', views.MMMethods.as_view(), name='deleteFromReq'),
+    path('api/user/register', views.userMethods.as_view(), name='register'),
+    path('api/user/<int:pk>', views.userMethods.as_view(), name='putUser'),
+    path('api/user/<int:pk>/auth', views.autentification, name='authUser'),
+    path('api/user/<int:pk>/logout', views.logout, name='logoutUser')
 ]

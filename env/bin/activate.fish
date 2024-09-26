@@ -33,7 +33,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/Users/zirox/Desktop/reports/bmstu_lab/env"
+set -gx VIRTUAL_ENV "/Users/zirox/Desktop/reports/astro_labs/RIP/env"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH
