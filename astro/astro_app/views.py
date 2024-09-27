@@ -175,7 +175,29 @@ class requests(APIView):
     serializer_class = requestSerial
 
     def get(self, request, format = None):
-        reqs = self.model.objects.filter(isDraft = False, isDeleted = False)
+        dateCreate = request.query_params.get('dateCreate', '')
+        isSaved = request.query_params.get('isSaved', None)
+        isAccepted = request.query_params.get('isAccepted', None)
+        isCanceled = request.query_params.get('isCanceled', None)
+        
+        filters = {
+            'isDraft': False,
+            'isDeleted': False,
+        }
+
+        if dateCreate:
+            filters['dateCreate'] = dateCreate
+        
+        if isSaved is not None:
+            filters['isSaved'] = isSaved == 'true'
+
+        if isAccepted is not None:
+            filters['isAccepted'] = isAccepted == 'true'
+
+        if isCanceled is not None:
+            filters['isCanceled'] = isCanceled == 'true'
+
+        reqs = self.model.objects.filter(**filters)
         serialized = self.serializer_class(reqs, many=True)
         return Response(serialized.data)
     
@@ -239,6 +261,7 @@ def moderate(request, pk, format=None):
 
     req.dateFinish = datetime.date.today().isoformat()
     req.moderID = user()
+    req.save()
 
     serialized = requestDetailSerial(req)
     return Response(serialized.data, status=status.HTTP_202_ACCEPTED)
