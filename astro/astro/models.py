@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 
-class planet(models.Model):
+class app_planet(models.Model):
     planetID = models.AutoField(primary_key=True)
     name = models.CharField(max_length=20)
     description = models.CharField(max_length=300)
@@ -9,7 +9,7 @@ class planet(models.Model):
     detImg = models.CharField(max_length=50)
     detDes = models.TextField()
 
-class cons_period(models.Model):
+class app_cons_period(models.Model):
     reqID = models.AutoField(primary_key=True)
     dateCreate = models.DateField(auto_now_add=True)
     dateSave = models.DateField(null=True)
@@ -26,9 +26,9 @@ class cons_period(models.Model):
     userID = models.ForeignKey(get_user_model(), on_delete=models.DO_NOTHING, null=True, related_name='user_reqs')
     moderID = models.ForeignKey(get_user_model(), on_delete=models.DO_NOTHING, null=True, related_name='moderated_reqs')
 
-class mm(models.Model):
-    planetID = models.ForeignKey(planet, on_delete=models.DO_NOTHING)
-    reqID = models.ForeignKey(cons_period, on_delete=models.DO_NOTHING)
+class app_mm(models.Model):
+    planetID = models.ForeignKey(app_planet, on_delete=models.DO_NOTHING)
+    reqID = models.ForeignKey(app_cons_period, on_delete=models.DO_NOTHING)
     isNew = models.BooleanField(null=True)
 
     class Meta:

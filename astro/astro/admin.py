@@ -1,8 +1,8 @@
 from django.contrib import admin
-from .models import planet
-from .models import cons_period
-from .models import mm
+from .models import app_planet
+from .models import app_cons_period
+from .models import app_mm
 
-admin.site.register(planet)
-admin.site.register(cons_period)
-admin.site.register(mm)
+admin.site.register(app_planet)
+admin.site.register(app_cons_period)
+admin.site.register(app_mm)

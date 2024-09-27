@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'astro.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'AstroData',
+        'NAME': 'astro',
         'USER': 'postgres',
         'PASSWORD': 'klopa228',
         'HOST': 'localhost',
