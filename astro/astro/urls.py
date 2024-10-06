@@ -21,20 +21,15 @@ from django.urls import path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.getServices, name = 'home'),
-    path('planet/<int:planet_id>/', views.getPlanet, name = 'PlanetID'),
-    path('wish/<int:wish_id>', views.getWishList, name = 'wish'),
-    path('add', views.addPlanet, name = 'addPlanet'),
-    path('delWish', views.removeDraft, name = 'delWish'),
 
-    path('api/planets/', views.planetMethods.as_view(), name='getPlanets'),
+    path('api/planets', views.planetMethods.as_view(), name='getPlanets'),
     path('api/planet/<int:pk>', views.one_planet.as_view(), name='getPlanet'),
-    path('api/planet/<int:pk>/post', views.add_image, name='setImg'),
+    path('api/planet/<int:pk>/add_image', views.add_image, name='setImg'),
 
-    path('api/requests', views.requests.as_view(), name='getRequests'),
-    path('api/request/<int:pk>', views.one_request.as_view(), name='getRequest'),
-    path('api/request/<int:pk>/save-by-creator', views.save_by_creator, name='saveByCreator'),
-    path('api/request/<int:pk>/moderate', views.moderate, name='moderateRequest'),
+    path('api/cons_periods', views.cons_periods.as_view(), name='getRequests'),
+    path('api/cons_period/<int:pk>', views.one_cons_period.as_view(), name='getRequest'),
+    path('api/cons_period/<int:pk>/save-by-creator', views.save_by_creator, name='saveByCreator'),
+    path('api/cons_period/<int:pk>/moderate', views.moderate, name='moderateRequest'),
 
     path('api/mm/<int:pk_req>/<int:pk_planet>', views.MMMethods.as_view(), name='deleteFromReq'),
     path('api/user/register', views.userMethods.as_view(), name='register'),

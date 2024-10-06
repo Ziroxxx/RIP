@@ -40,6 +40,5 @@ class requestDetailSerial(serializers.ModelSerializer):
 
     class Meta:
         model = cons_period
-        fields = ['reqID', 'dateCreate', 'dateSave', 'dateFinish', 
-                  'isDraft', 'isSaved', 'isAccepted', 'isCanceled', 'isDeleted',
-                  'dateStart', 'dateEnd', 'constellation', 'planets', 'userID', 'moderID']
+        fields = ['reqID', 'dateCreated', 'dateSaved', 'dateModerated',  
+                  'status','dateStart', 'dateEnd', 'constellation', 'planets', 'userID', 'moderID']
