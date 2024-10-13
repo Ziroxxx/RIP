@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'astro_app',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -105,6 +106,19 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+REST_FRAMEWORK = {
+   
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+
+    'DEFAULT_PERMISSION_CLASSES': [
+        'astro_app.permissions.IsAuthOrReadOnly',
+    ]
+}
+
+REDIS_HOST = '0.0.0.0'
+REDIS_PORT = 6379
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/

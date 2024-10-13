@@ -18,6 +18,22 @@ Including another URLconf
 from astro_app import views 
 from django.contrib import admin
 from django.urls import path
+from rest_framework import permissions
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+
+schema_view = get_schema_view(
+   openapi.Info(
+      title="Snippets API",
+      default_version='v1',
+      description="Test description",
+      terms_of_service="https://www.google.com/policies/terms/",
+      contact=openapi.Contact(email="contact@snippets.local"),
+      license=openapi.License(name="BSD License"),
+   ),
+   public=True,
+   permission_classes=(permissions.AllowAny,),
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,11 +45,13 @@ urlpatterns = [
     path('api/cons_periods', views.cons_periods.as_view(), name='getRequests'),
     path('api/cons_period/<int:pk>', views.one_cons_period.as_view(), name='getRequest'),
     path('api/cons_period/<int:pk>/save-by-creator', views.save_by_creator, name='saveByCreator'),
-    path('api/cons_period/<int:pk>/moderate', views.moderate, name='moderateRequest'),
+    path('api/cons_period/<int:pk>/moderate', views.moderateByCreator.as_view(), name='moderateRequest'),
 
     path('api/mm/<int:pk_req>/<int:pk_planet>', views.MMMethods.as_view(), name='deleteFromReq'),
-    path('api/user/register', views.userMethods.as_view(), name='register'),
-    path('api/user/<int:pk>', views.userMethods.as_view(), name='putUser'),
-    path('api/user/<int:pk>/auth', views.autentification, name='authUser'),
-    path('api/user/<int:pk>/logout', views.logout, name='logoutUser')
+    path('api/user/reg', views.userReg.as_view(), name='register'),
+    path('api/user/<int:pk>', views.userProfile.as_view(), name='putUser'),
+    path('api/user/login', views.userLogin.as_view(), name='authUser'),
+    path('api/user/logout', views.userLogout.as_view(), name='logoutUser'),
+
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui')
 ]
