@@ -46,10 +46,11 @@ def del_pic(planet):
     )
 
     url = planet.img
-    url = '/'.join(url.split('/')[4:])
+    if url:
+        url = '/'.join(url.split('/')[4:])
 
-    res = process_file_delete(client, url)
-    if 'error' in res:
-        return Response(res)
+        res = process_file_delete(client, url)
+        if 'error' in res:
+            return Response(res)
     
     return Response({'status': 'success'})

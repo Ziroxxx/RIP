@@ -104,7 +104,7 @@ class one_planet(APIView):
     @method_permission_classes((IsAuth,))
     @swagger_auto_schema(request_body=serializer_class)
     def post(self, request, pk, format=None): #добавление планеты в заявку
-        user1 = request.user
+        user1 = getUserBySession(request)
         draft = user1.user_reqs.filter(status='draft').first()
         obj = get_object_or_404(self.model, pk=pk)
         if not draft and not(mm.objects.filter(reqID = draft, planetID = obj).exists()):
@@ -203,19 +203,23 @@ class moderateByCreator(APIView):
         else:
             req.status = 'cancelled'
         planets_in_this_req = planet.objects.filter(mm__reqID = req)
-        same_req = cons_period.objects.filter(dateStart = req.dateStart, dateEnd = req.dateEnd, constellation = req.constellation).exclude(pk=pk, status = 'draft')
-        planets_in_same_req = planet.objects.filter(mm__reqID__in = same_req).distinct()
 
         for one_planet in planets_in_this_req:
             result = mm.objects.get(planetID = one_planet, reqID = req)
-            if one_planet in planets_in_same_req:
-                result.isNew = False
-            else:
+            last_approved_period = cons_period.objects.filter(
+                status='accepted',
+                mm__planetID=one_planet
+                ).order_by('-dateEnd').first()
+            if not last_approved_period:
                 result.isNew = True
+            elif last_approved_period.dateEnd < req.dateEnd and last_approved_period.constellation != req.constellation:
+                result.isNew = True
+            else:
+                result.isNew = False
             result.save()
 
         req.dateModerated = datetime.date.today().isoformat()
-        req.moderID = request.user
+        req.moderID = getUserBySession(request)
         req.save()
 
         serialized = requestDetailSerial(req)

@@ -15,7 +15,7 @@ class IsAdmin(permissions.BasePermission):
 class IsAuth(permissions.BasePermission):
     def has_permission(self, request, view):
         user = getUserBySession(request)
-        print(f"User in permission check: {request.user}")
+        print(f"User in permission check: {user}")
         return bool(user)
     
 class IsAuthOrReadOnly(permissions.BasePermission):
