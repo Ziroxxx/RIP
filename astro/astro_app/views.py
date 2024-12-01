@@ -10,6 +10,7 @@ from .minio import *
 from django.contrib.auth import get_user_model
 import datetime
 from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
 from django.contrib.auth import authenticate
 from django.http import HttpResponse
 from rest_framework.permissions import AllowAny
@@ -43,6 +44,7 @@ class planetMethods(APIView):
     model = planet
     serializer_class = planetSerial
 
+    @swagger_auto_schema(query_serializer=planetNameSerializer, responses={200: planetsSerial})
     def get(self, request, format=None): #все планеты
         searchText = request.query_params.get('PlanetName', '')
         searchResult = planet.objects.filter(name__icontains=searchText)
@@ -76,6 +78,7 @@ class one_planet(APIView):
     model = planet
     serializer_class = planetSerial
 
+    @swagger_auto_schema(responses={200: planetSerial})
     def get(self, request, pk, format=None): #инфа об одной планете
         obj = get_object_or_404(self.model, pk=pk)
         return Response(self.serializer_class(obj).data)
@@ -101,8 +104,19 @@ class one_planet(APIView):
         obj.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
     
+    
+    @swagger_auto_schema(
+    responses={
+        200: openapi.Response(
+            description="Успешно добавлено",
+            schema=requestDetailSerial()
+            ),
+        208: openapi.Response(
+            description="Уже добавлено",
+            schema=requestDetailSerial()
+        ),
+    })
     @method_permission_classes((IsAuth,))
-    @swagger_auto_schema(request_body=serializer_class)
     def post(self, request, pk, format=None): #добавление планеты в заявку
         user1 = getUserBySession(request)
         draft = user1.user_reqs.filter(status='draft').first()
@@ -113,8 +127,10 @@ class one_planet(APIView):
         if not(mm.objects.filter(reqID = draft, planetID = obj).exists()):
             new_position = mm(reqID = draft, planetID = obj)
             new_position.save()
-            return Response(status=status.HTTP_200_OK)
-        return Response(status=status.HTTP_208_ALREADY_REPORTED)
+            serialized = requestDetailSerial(draft)
+            return Response(serialized.data, status=status.HTTP_200_OK)
+        serialized = requestDetailSerial(draft)
+        return Response(serialized.data, status=status.HTTP_208_ALREADY_REPORTED)
 
 @method_permission_classes((IsAdmin,))
 @swagger_auto_schema(method='post', request_body=planetSerial)    
@@ -131,6 +147,7 @@ class cons_periods(APIView): #cons_periods
     model = cons_period
     serializer_class = requestSerial
 
+    @swagger_auto_schema(responses={200: serializer_class(many=True)})
     @method_permission_classes((IsAuth,))
     def get(self, request, format = None): #получение всех заявок
         user = getUserBySession(request)
@@ -155,6 +172,7 @@ class one_cons_period(APIView):
     model = cons_period
     serializer_class = requestDetailSerial
 
+    @swagger_auto_schema(responses={200: serializer_class})
     def get(self, request, pk, format = None): #получение одной зявки
         req = get_object_or_404(self.model, pk=pk)
         serialised = self.serializer_class(req)
@@ -229,7 +247,8 @@ class MMMethods(APIView):
     model = mm
     serializer_class = MMwithPlanetSerial
 
-    def delete(self, requset, pk_planet, pk_req, format = None): #удаление из заявки
+    @swagger_auto_schema(responses={200: serializer_class(many=True)})
+    def delete(self, requset, pk_req, pk_planet, format = None): #удаление из заявки
         mm_obj = get_object_or_404(self.model, planetID = pk_planet, reqID = pk_req)
         mm_obj.delete()
         mm_list = self.model.objects.filter(reqID = pk_req)
@@ -254,7 +273,7 @@ class userReg(APIView):
     def post(self, request, format = None): #регистрация
         serialized = self.serializer_class(data=request.data)
         if self.model.objects.filter(username=request.data['username']).exists():
-            return Response({'status': 'arleady exists'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"status": "arleady exists"}, status=status.HTTP_400_BAD_REQUEST)
         if serialized.is_valid():
             user1 = self.model.objects.create_user(
                 username = serialized.validated_data.get('username'),
@@ -274,7 +293,7 @@ class userProfile(APIView):
     serializer_class = userSerial
 
     @swagger_auto_schema(request_body=serializer_class)
-    @method_permission_classes((IsAdmin,))
+    @method_permission_classes((IsAuth,))
     def put(self, request, pk, format = None): #личный кабинет
         user1 = get_object_or_404(self.model, pk = pk)
         serialized = self.serializer_class(user1, data=request.data, partial = True)
@@ -283,7 +302,15 @@ class userProfile(APIView):
             if 'password' in serialized.validated_data:
                 user1.set_password(serialized.validated_data.get('password'))
                 user1.save()
-            return Response(serialized.data, status=status.HTTP_202_ACCEPTED)
+            if 'username' in serialized.validated_data:
+                old_ssid = request.COOKIES.get('session_id')
+                session_storage.delete(old_ssid)
+                random_key = str(uuid.uuid4())
+                session_storage.set(random_key, serialized._validated_data.get('username'))
+                response = Response(serialized.data, status=status.HTTP_202_ACCEPTED)
+                response.set_cookie("session_id", random_key)
+
+            return response
         return Response(serialized.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class userLogin(APIView):
@@ -292,8 +319,10 @@ class userLogin(APIView):
     permission_classes = [AllowAny]
     authentication_classes = []
 
-    @swagger_auto_schema(request_body=serializer_class)
+    @swagger_auto_schema(request_body=serializer_class, responses={200: userSerial})
     def post(self, request, format = None): #аутентификация
+        if 'username' not in request.data or 'password' not in request.data:
+            return HttpResponse("{'error': 'No username or password'}")
         username = request.data["username"] 
         password = request.data["password"]
         user = authenticate(request, username=username, password=password)
@@ -306,12 +335,13 @@ class userLogin(APIView):
                 if session_storage.get(old_ssid):
                     session_storage.delete(old_ssid)
 
-            response = HttpResponse("{'status': 'ok'}")
+            serialised = self.serializer_class(user)
+            response = Response(serialised.data, status=status.HTTP_200_OK)
             response.set_cookie("session_id", random_key)
 
             return response
         else:
-            return HttpResponse("{'status': 'error', 'error': 'login failed'}")
+            return Response('{"status": "error", "error": "login failed"}', status=status.HTTP_400_BAD_REQUEST)
 
 class userLogout(APIView):
     model = get_user_model()
@@ -321,5 +351,5 @@ class userLogout(APIView):
     def post(self, request, format = None): #деваторизация
         ssid = request.COOKIES.get('session_id')
         session_storage.delete(ssid)
-        return Response({'status': 'logged out'}, status=status.HTTP_401_UNAUTHORIZED)
+        return Response({'status': 'logged out'}, status=status.HTTP_200_OK)
 

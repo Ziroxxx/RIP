@@ -12,7 +12,15 @@ class planetSerial(serializers.ModelSerializer):
             for name, field in super().get_fields().items():
                 field.required = False
                 new_fields[name] = field
-            return new_fields 
+            return new_fields
+    
+class planetsSerial(serializers.Serializer):
+     planets = planetSerial(many=True)
+     wishID = serializers.CharField()
+     wishCount = serializers.IntegerField()
+
+class planetNameSerializer(serializers.Serializer):
+     PlanetName = serializers.CharField()
 
 class userSerial(serializers.ModelSerializer):
     class Meta:
@@ -25,6 +33,9 @@ class userSerial(serializers.ModelSerializer):
             field.required = False
             new_fields[name] = field
         return new_fields
+
+class loginSeraial(serializers.Serializer):
+     status = serializers.CharField()
 
 class requestSerial(serializers.ModelSerializer):
     userID = serializers.StringRelatedField()
